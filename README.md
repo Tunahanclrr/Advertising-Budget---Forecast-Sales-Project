@@ -1,3 +1,71 @@
+# Advertising Budget - Sales Prediction Project
+
+## About Project
+This project is a machine learning application that analyzes the impact of investments in different advertising channels (TV, Radio, Newspaper) on sales and predicts future sales.
+
+[English](#advertising-budget---sales-prediction-project) | [Türkçe](#reklam-bütçesi---satış-tahmini-projesi)
+
+## Problem Definition
+Companies struggle with how to distribute their advertising budgets across different media channels. This project aims to:
+- Determine which advertising channel is more effective on sales
+- Predict potential sales with a specific advertising budget distribution
+- Optimize return on advertising investments
+
+## Dataset
+The dataset includes:
+- TV Advertising Budget ($)
+- Radio Advertising Budget ($)
+- Newspaper Advertising Budget ($)
+- Sales ($)
+
+## Methodology and Technologies Used
+1. **Data Analysis and Visualization**
+   - Pandas and NumPy: Data manipulation
+   - Seaborn and Matplotlib: Data visualization
+   - Correlation analysis and distribution plots
+
+2. **Model Development**
+   - Sklearn: Machine learning models
+   - Comparison of different regression models
+   - Cross-validation and model evaluation
+
+3. **Interface Development**
+   - Streamlit: Web-based user interface
+   - Interactive input and real-time predictions
+
+## Why Ridge Regression?
+Reasons for choosing Ridge regression model:
+
+1. **Multicollinearity Management**: 
+   - High correlation between advertising channels
+   - Ridge regression effectively manages this with L2 regularization
+
+2. **Overfitting Control**: 
+   - L2 regularization prevents model overfitting
+   - More generalizable predictions are obtained
+
+3. **Feature Importance**: 
+   - Maintains all features while properly weighting their effects
+   - Regulates feature effects instead of feature selection
+
+4. **Model Performance**: 
+   - Highest R² score achieved with Ridge model
+   - More consistent results in predictions
+
+## How to Use?
+1. Start Streamlit application: `streamlit run app.py`
+2. Enter advertising budgets via web interface
+3. Click "Make Sales Prediction" button
+4. View estimated sales figure
+
+## Future Improvements
+- Time series analysis can be added
+- Can be customized for different sectors
+- More advertising channels can be added
+- Seasonality effects can be included
+
+---
+
 # Reklam Bütçesi - Satış Tahmini Projesi
 
 ## Proje Hakkında
