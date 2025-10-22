@@ -4,14 +4,11 @@ from sklearn.linear_model import Ridge
 from sklearn.preprocessing import StandardScaler
 
 # Page configuration
-st.set_page_config(
-    page_title="Advertising Budget - Sales Prediction",
-    layout="centered"
-)
+st.set_page_config(page_title="Sales Predictor", layout="centered")
 
-# Title
-st.title("💰 Advertising Budget Sales Predictor")
-st.write("Enter your advertising budgets to predict potential sales!")
+# Title and description
+st.title("� Sales Predictor")
+st.write("Predict sales based on advertising budgets")
 
 # Model and data preparation
 @st.cache_resource
