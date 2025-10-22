@@ -1,19 +1,32 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import pickle
+from sklearn.linear_model import Ridge
+from sklearn.preprocessing import StandardScaler
 
-# Modeli ve scaler'ı yükle
+# Veriyi yükle ve modeli eğit
 @st.cache_resource
-def load_model():
-    with open('ridge_model.pkl', 'rb') as f:
-        model = pickle.load(f)
-    with open('scaler.pkl', 'rb') as f:
-        scaler = pickle.load(f)
+def load_and_train_model():
+    # Veriyi oku
+    df = pd.read_csv('Advertising Budget and Sales.csv')
+    df = df.drop("Unnamed: 0", axis=1)
+    
+    # Veriyi hazırla
+    X = df[["TV Ad Budget ($)","Radio Ad Budget ($)","Newspaper Ad Budget ($)"]]
+    y = df["Sales ($)"]
+    
+    # Scaler oluştur ve uygula
+    scaler = StandardScaler()
+    X_scaled = scaler.fit_transform(X)
+    
+    # Ridge modelini eğit
+    model = Ridge()
+    model.fit(X_scaled, y)
+    
     return model, scaler
 
 # Model ve scaler'ı yükle
-model, scaler = load_model()
+model, scaler = load_and_train_model()
 
 # Sayfa konfigürasyonu
 st.set_page_config(
