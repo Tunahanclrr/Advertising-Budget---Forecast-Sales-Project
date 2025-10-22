@@ -1,8 +1,19 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import Ridge
+import pickle
+
+# Modeli ve scaler'ı yükle
+@st.cache_resource
+def load_model():
+    with open('ridge_model.pkl', 'rb') as f:
+        model = pickle.load(f)
+    with open('scaler.pkl', 'rb') as f:
+        scaler = pickle.load(f)
+    return model, scaler
+
+# Model ve scaler'ı yükle
+model, scaler = load_model()
 
 # Sayfa konfigürasyonu
 st.set_page_config(
@@ -16,24 +27,17 @@ st.write("Enter your advertising budgets and learn your estimated sales figures!
 
 # Veriyi yükle ve modeli eğit
 @st.cache_data
-def load_and_train_model():
-    # Veriyi oku
-    df = pd.read_csv('Advertising Budget and Sales.csv')
-    df = df.drop("Unnamed: 0", axis=1)
+def predict_sales(tv, radio, newspaper):
+    # Veriyi uygun formata dönüştür
+    X_new = np.array([[tv, radio, newspaper]])
     
-    # Veriyi hazırla
-    X = df[["TV Ad Budget ($)","Radio Ad Budget ($)","Newspaper Ad Budget ($)"]]
-    y = df["Sales ($)"]
+    # Veriyi ölçeklendir
+    X_new_scaled = scaler.transform(X_new)
     
-    # Scaler oluştur ve uygula
-    scaler = StandardScaler()
-    X_scaled = scaler.fit_transform(X)
+    # Tahmin yap
+    prediction = model.predict(X_new_scaled)
     
-    # Ridge modelini eğit
-    model = Ridge()
-    model.fit(X_scaled, y)
-    
-    return model, scaler
+    return prediction[0]
 
 # Model ve scaler'ı yükle
 model, scaler = load_and_train_model()
