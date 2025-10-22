@@ -3,17 +3,17 @@ import numpy as np
 from sklearn.linear_model import Ridge
 from sklearn.preprocessing import StandardScaler
 
-# Sayfa konfigürasyonu
+# Page configuration
 st.set_page_config(
-    page_title="Reklam Bütçesi - Satış Tahmini",
+    page_title="Advertising Budget - Sales Prediction",
     layout="centered"
 )
 
-# Başlık
-st.title("💰 Reklam Bütçesi ile Satış Tahmini")
-st.write("Reklam bütçelerinizi girin, tahmini satış rakamını öğrenin!")
+# Title
+st.title("💰 Advertising Budget Sales Predictor")
+st.write("Enter your advertising budgets to predict potential sales!")
 
-# Model ve veri hazırlama
+# Model and data preparation
 @st.cache_resource
 def create_model():
     # Örnek veri
@@ -39,25 +39,25 @@ def create_model():
 # Model ve scaler'ı yükle
 model, scaler = create_model()
 
-# Input alanları
-st.write("### 📊 Reklam Bütçelerini Girin")
+# Input areas
+st.write("### 📊 Enter Advertising Budgets")
 
 tv_budget = st.number_input(
-    "📺 TV Reklam Bütçesi ($)",
+    "📺 TV Advertising Budget ($)",
     min_value=0,
     max_value=300,
     value=150
 )
 
 radio_budget = st.number_input(
-    "📻 Radio Reklam Bütçesi ($)",
+    "📻 Radio Advertising Budget ($)",
     min_value=0,
     max_value=100,
     value=50
 )
 
 newspaper_budget = st.number_input(
-    "📰 Gazete Reklam Bütçesi ($)",
+    "📰 Newspaper Advertising Budget ($)",
     min_value=0,
     max_value=100,
     value=30
@@ -69,13 +69,13 @@ def predict_sales(tv, radio, newspaper):
     X_new_scaled = scaler.transform(X_new)
     return model.predict(X_new_scaled)[0]
 
-# Tahmin butonu
-if st.button("🎯 Satış Tahmini Yap", type="primary"):
+# Prediction button
+if st.button("🎯 Make Sales Prediction", type="primary"):
     predicted_sales = predict_sales(tv_budget, radio_budget, newspaper_budget)
     
     st.markdown("---")
-    st.write("### 💵 Tahmini Satış")
-    st.success(f"Girdiğiniz reklam bütçeleri ile **${predicted_sales:,.2f}** satış yapmanız bekleniyor.")
+    st.write("### 💵 Predicted Sales")
+    st.success(f"With your advertising budgets, expected sales are **${predicted_sales:,.2f}**")
     
     total_budget = tv_budget + radio_budget + newspaper_budget
-    st.info(f"Toplam Reklam Bütçesi: ${total_budget:,.2f}")
+    st.info(f"Total Advertising Budget: ${total_budget:,.2f}")
